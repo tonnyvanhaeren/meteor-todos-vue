@@ -1,22 +1,32 @@
 <template>
-  <div class="container">
+  <div class="app">
     <header>
-      <h1>Todo List</h1>
+      <div className="app-bar">
+        <div className="app-header">
+          <h1>📝️ To Do List</h1>
+        </div>
+      </div>
     </header>
-    <ul>
-      <Task v-for="task in tasks" :key="task._id" :task="task" />
-    </ul>
+    <div class="main">
+      <TaskForm />
+      <ul class="tasks">
+        <Task v-for="task in tasks" :key="task._id" class="task" :task="task" />
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
 // import Vue from 'vue';
 import Task from './components/TaskComponent.vue';
+import TaskForm from './components/TaskForm.vue';
+
 import { TasksCollection } from '../api/TasksCollection';
 
 export default {
   components: {
     Task,
+    TaskForm,
   },
   data() {
     return {};
@@ -24,8 +34,9 @@ export default {
   methods: {},
   meteor: {
     tasks() {
-      return TasksCollection.find({}).fetch();
+      return TasksCollection.find({}, { sort: { createdAt: -1 } }).fetch();
     },
   },
 };
 </script>
+<style scoped></style>
