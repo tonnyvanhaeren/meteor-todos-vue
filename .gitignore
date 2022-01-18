@@ -1,0 +1,5 @@
+node_modules/
+.cache
+.meteor/local/*
+ pm-debug.log
+ packages/*/.npm/
