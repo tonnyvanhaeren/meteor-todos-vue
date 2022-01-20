@@ -7,6 +7,7 @@
 
 <script>
 // import Vue from 'vue';
+import { Meteor } from 'meteor/meteor';
 import { TasksCollection } from '../../api/TasksCollection';
 export default {
   data() {
@@ -16,10 +17,16 @@ export default {
   },
   methods: {
     handleSubmit() {
+      if (this.newTask.length === 0) return;
+
+      const user = Meteor.user();
+
       TasksCollection.insert({
-        text: this.newTask,
+        text: this.newTask.trim(),
         createdAt: new Date(), // current time
+        userId: user._id,
       });
+
       // Clear form
       this.newTask = '';
     },
