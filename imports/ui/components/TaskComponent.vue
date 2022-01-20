@@ -12,7 +12,8 @@
 </template>
 
 <script>
-import { TasksCollection } from '../../api/TasksCollection';
+import { Meteor } from 'meteor/meteor';
+
 export default {
   props: { task: { type: Object, default: null } },
   data() {
@@ -26,12 +27,10 @@ export default {
   methods: {
     toggleChecked() {
       // Set the checked property to the opposite of its current value
-      TasksCollection.update(this.task._id, {
-        $set: { isChecked: !this.task.isChecked },
-      });
+      Meteor.call('tasks.setIsChecked', this.task._id, !this.task.isChecked);
     },
     deleteThisTask() {
-      TasksCollection.remove(this.task._id);
+      Meteor.call('tasks.remove', this.task._id);
     },
   },
 };
